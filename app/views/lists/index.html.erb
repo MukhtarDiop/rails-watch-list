@@ -1,0 +1,18 @@
+<h1>All Lists</h1>
+
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://images.pexels.com/photos/274937/pexels-photo-274937.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);">
+  <div class="container">
+    <h1>Save any <strong>kind</strong> of <strong>movies</strong>!</h1>
+
+    <%= link_to "New List", new_list_path %></a>
+
+  </div>
+</div>
+<div>
+
+  <ul>
+    <% @lists.each do |list| %>
+      <li><%= link_to list.name, list_path(list)  %></li>
+    <% end %>
+  </ul>
+</div>
