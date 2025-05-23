@@ -1,6 +1,25 @@
-<%= simple_form_for @bookmark do |f| %>
-  <%= f.input :name %>
-  <%= f.association :company %>
-  <%= f.association :roles %>
-  <%= f.button :submit %>
-<% end %>
+<div class="container my-5">
+  <h2 class="mb-4"><i class="fa-solid fa-bookmark"></i> Create Bookmark</h2>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <%= simple_form_for @bookmark, html: { class: "needs-validation" } do |f| %>
+        <div class="mb-3">
+          <%= f.input :name, label: "Bookmark Name", input_html: { class: "form-control" }, label_html: { class: "form-label" } %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.association :company, label: "Company", as: :select, input_html: { class: "form-select" }, label_html: { class: "form-label" } %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.association :roles, label: "Roles", as: :check_boxes, item_wrapper_class: "form-check", label_html: { class: "form-label" }, input_html: { class: "form-check-input" } %>
+        </div>
+
+        <%= f.button :submit, class: "btn btn-primary" do %>
+          <i class="fa-solid fa-paper-plane"></i> Submit
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

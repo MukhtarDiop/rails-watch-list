@@ -1,15 +1,29 @@
 <h1>Bookmarks</h1>
-<div class="container py-5">
-  <div class="row">
-    <div class="col-12 col-md-6 offset-lg-3">
-      <div class="bg-white rounded p-3 shadow">
-        <h3>Add a movie to your <%= @list.name %> list</h3>
-        <%= simple_form_for [@list, @bookmark] do |f| %>
-          <%= f.input :comment, placeholder: "Enter a comment about the movie" %>
-          <%= f.association :movie, prompt: "Select a movie", input_html: {data: {controller: "tom-select"}} %>
-          <%= f.submit class: "btn btn-flat" %>
-        <% end %>
-      </div>
+<div class="container my-5">
+  <h1 class="mb-4">
+    <i class="fa-solid fa-square-plus"></i> Add a Movie to
+    <span class="text-primary"><%= @list.name %></span>
+  </h1>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <%= form_with model: [@list, @bookmark], local: true do |f| %>
+        <div class="mb-3">
+          <%= f.label :movie_id, "Select a Movie", class: "form-label" %>
+          <%= f.collection_select :movie_id, Movie.all, :id, :title, { prompt: "Choose a movie" }, class: "form-select" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :comment, class: "form-label" %>
+          <%= f.text_area :comment, class: "form-control", rows: 3, placeholder: "Why do you want to add this?" %>
+        </div>
+
+        <%= f.submit "Add Bookmark", class: "btn btn-success" %>
+      <% end %>
     </div>
   </div>
+
+  <%= link_to list_path(@list), class: "btn btn-outline-secondary" do %>
+    <i class="fa-solid fa-arrow-left"></i> Back to List
+  <% end %>
 </div>

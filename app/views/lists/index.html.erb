@@ -1,18 +1,25 @@
-<h1>All Lists</h1>
+<h1 class="text-center my-4"><i class="fa-solid fa-list-ul"></i> All Lists</h1>
 
-<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://images.pexels.com/photos/274937/pexels-photo-274937.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);">
-  <div class="container">
-    <h1>Save any <strong>kind</strong> of <strong>movies</strong>!</h1>
-
-    <%= link_to "New List", new_list_path %></a>
-
+<div class="banner mb-5" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(https://images.pexels.com/photos/274937/pexels-photo-274937.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2); background-size: cover; background-position: center; padding: 5rem 1rem; color: white;">
+  <div class="container text-center">
+    <h1 class="display-4 mb-3">Save any <strong>kind</strong> of <strong>movies</strong>!</h1>
+    <%= link_to new_list_path, class: "btn btn-warning btn-lg" do %>
+      <i class="fa-solid fa-plus"></i> New List
+    <% end %>
   </div>
 </div>
-<div>
 
-  <ul>
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     <% @lists.each do |list| %>
-      <li><%= link_to list.name, list_path(list)  %></li>
+      <div class="col">
+        <div class="card shadow-sm h-100">
+          <div class="card-body d-flex flex-column justify-content-between">
+            <h5 class="card-title"><i class="fa-solid fa-film me-2"></i><%= list.name %></h5>
+            <%= link_to "View List", list_path(list), class: "btn btn-outline-primary mt-3" %>
+          </div>
+        </div>
+      </div>
     <% end %>
-  </ul>
+  </div>
 </div>

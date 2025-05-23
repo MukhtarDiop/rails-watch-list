@@ -1,16 +1,56 @@
-<h1><%= @list.name %></h1>
+<div class="container my-5">
+  <h2 class="mb-4"><i class="fa-solid fa-bookmark"></i> Bookmarked Movies</h2>
 
-<% @list.bookmarks.each do |bookmark| %>
-  <div>
-    <%= bookmark.movie.title %>
-    <p><%= bookmark.comment %></p>
-    <%= link_to "Remove", bookmark_path(bookmark) %>
+  <% if @list.bookmarks.any? %>
+    <div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
+      <% @list.bookmarks.each do |bookmark| %>
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="fa-solid fa-film me-2"></i><%= bookmark.movie.title %>
+              </h5>
+              <p class="card-text text-muted"><%= bookmark.comment %></p>
+              <%= link_to bookmark_path(bookmark), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger" do %>
+                <i class="fa-solid fa-trash"></i> Remove
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-muted">No movies added to this list yet.</p>
+  <% end %>
+
+  <hr class="my-5">
+
+  <h3 class="mb-3"><i class="fa-solid fa-plus"></i> Add a Movie</h3>
+
+  <div class="card shadow-sm mb-5">
+    <div class="card-body">
+      <%= simple_form_for [@list, @bookmark], html: { class: "needs-validation" } do |f| %>
+        <div class="mb-3">
+          <%= f.input :movie_id, collection: Movie.all, label: "Select Movie", input_html: { class: "form-select" }, label_html: { class: "form-label" } %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.input :comment, input_html: { class: "form-control", rows: 3 }, label_html: { class: "form-label" } %>
+        </div>
+
+        <%= f.button :submit, class: "btn btn-primary" do %>
+          <i class="fa-solid fa-paper-plane"></i> Add Bookmark
+        <% end %>
+      <% end %>
+    </div>
   </div>
-<% end %>
 
-<h2>Add Movie</h2>
-<%= simple_form_for [@list, @bookmark] do |f| %>
-  <%= f.input :movie_id, collection: Movie.all %>
-  <%= f.input :comment %>
-  <%= f.button :submit %>
-<% end %>
+  <div class="d-flex justify-content-between">
+    <%= link_to lists_path, class: "btn btn-outline-secondary" do %>
+      <i class="fa-solid fa-arrow-left"></i> Back to All Lists
+    <% end %>
+    <%= link_to new_list_bookmark_path(@list), class: "btn btn-outline-info" do %>
+      <i class="fa-solid fa-plus"></i> Go to Bookmark Form
+    <% end %>
+  </div>
+</div>
